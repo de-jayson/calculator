@@ -15,12 +15,217 @@
   </style>
 </head>
 <body>
+  <style>
+    /* Base reset for margin, padding, and box-sizing */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Center the calculator on the page */
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #2b3945;
+    }
+
+    /* Calculator container */
+    .calculator {
+        width: 320px;
+        background-color: #3b475e;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+        color: white;
+    }
+
+    /* Title and theme toggle */
+    .calculator-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .theme-toggle {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .theme-toggle input[type="radio"] {
+        display: none;
+    }
+
+    .theme-toggle label {
+        width: 20px;
+        height: 20px;
+        background-color: #555;
+        border-radius: 50%;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .theme-toggle input[type="radio"]:checked + label {
+        background-color: #ff6347;
+    }
+
+    /* Display screen */
+    .display {
+        background-color: #1f2836;
+        height: 60px;
+        padding: 15px;
+        text-align: right;
+        font-size: 32px;
+        color: white;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    /* Grid layout for buttons */
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    /* Button styling */
+    .button {
+        padding: 20px;
+        font-size: 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #3b475e;
+        transition: background-color 0.2s;
+    }
+
+    /* Button colors */
+    .button.number, .button.operator {
+        background-color: #e0e0e0;
+    }
+
+    .button.operator {
+        background-color: #6c7a8f;
+        color: white;
+    }
+
+    .button.del {
+        background-color: #4a556a;
+        color: white;
+    }
+
+    .button.reset {
+        background-color: #6c7a8f;
+        color: white;
+        grid-column: span 2;
+    }
+
+    .button.equals {
+        background-color: #ff6347;
+        color: white;
+        grid-column: span 2;
+    }
+
+    /* Hover effect */
+    .button:hover {
+        opacity: 0.9;
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="calculator-header">
+        <div class="title">calc</div>
+        <div class="theme-toggle">
+            <span>THEME</span>
+            <input type="radio" name="theme" id="theme1" checked>
+            <label for="theme1"></label>
+            <input type="radio" name="theme" id="theme2">
+            <label for="theme2"></label>
+            <input type="radio" name="theme" id="theme3">
+            <label for="theme3"></label>
+        </div>
+    </div>
+
+    <div class="display" id="display">0</div>
+
+    <div class="buttons">
+        <button class="button number" onclick="appendNumber('7')">7</button>
+        <button class="button number" onclick="appendNumber('8')">8</button>
+        <button class="button number" onclick="appendNumber('9')">9</button>
+        <button class="button del" onclick="deleteLast()">DEL</button>
+
+        <button class="button number" onclick="appendNumber('4')">4</button>
+        <button class="button number" onclick="appendNumber('5')">5</button>
+        <button class="button number" onclick="appendNumber('6')">6</button>
+        <button class="button operator" onclick="appendOperator('+')">+</button>
+
+        <button class="button number" onclick="appendNumber('1')">1</button>
+        <button class="button number" onclick="appendNumber('2')">2</button>
+        <button class="button number" onclick="appendNumber('3')">3</button>
+        <button class="button operator" onclick="appendOperator('-')">-</button>
+
+        <button class="button number" onclick="appendNumber('0')">0</button>
+        <button class="button number" onclick="appendNumber('.')">.</button>
+        <button class="button operator" onclick="appendOperator('/')">/</button>
+        <button class="button operator" onclick="appendOperator('*')">x</button>
+
+        <button class="button reset" onclick="clearDisplay()">RESET</button>
+        <button class="button equals" onclick="calculate()">=</button>
+    </div>
+</div>
+
+<script>
+    const display = document.getElementById('display');
+
+    // Function to clear the display
+    function clearDisplay() {
+        display.textContent = '0';
+    }
+
+    // Function to delete the last character
+    function deleteLast() {
+        display.textContent = display.textContent.slice(0, -1) || '0';
+    }
+
+    // Function to append a number
+    function appendNumber(number) {
+        if (display.textContent === '0') {
+            display.textContent = number;
+        } else {
+            display.textContent += number;
+        }
+    }
+
+    // Function to append an operator
+    function appendOperator(operator) {
+        const lastChar = display.textContent.slice(-1);
+        if (!['+', '-', '*', '/'].includes(lastChar)) {
+            display.textContent += operator;
+        }
+    }
+
+    // Function to calculate the result
+    function calculate() {
+        try {
+            display.textContent = eval(display.textContent);
+        } catch (error) {
+            display.textContent = 'Error';
+        }
+    }
+</script>
 
 
   
   <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+    Coded by <a href="#"><h2>Daniel Dowuona</h2></a>.
   </div>
 </body>
 </html>
